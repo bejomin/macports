@@ -1,0 +1,56 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           active_variants 1.1
+
+github.setup        mltframework shotcut 20.04.12 v
+name                shotcut
+version             20.04.12
+categories          multimedia
+platforms           darwin
+license             GPL-3
+maintainers         nomaintainer
+description         Video Editing Software
+long_description    Shotcut is a free, open source, cross-platform video editor.
+homepage            https://www.shotcut.org/
+
+#qmake doesn't seem to detect correct platform even though src.pro looks good
+patchfiles          patch-fix-qmake.diff
+
+checksums           shotcut-${version}${extract.suffix} \
+                    rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
+                    sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
+                    size 5649022 
+
+#Shotcut fails to compile if mlt<=6.16.0
+depends_lib         port:qt5 \
+                    port:qt5-qtdeclarative \
+                    port:qt5-qtmultimedia \
+                    port:qt5-qtnetworkauth \
+                    port:qt5-qtwebkit \
+                    port:qt5-qtwebsockets \
+                    port:qt5-qtscxml \
+                    port:qt5-qtgraphicaleffects \
+                    port:qt5-qtquickcontrols \
+                    port:mlt \
+                    port:ffmpeg \
+                    port:jack \
+                    port:x264 \
+                    port:libvpx \
+                    port:lame \
+                    port:frei0r-plugins \
+                    port:libmovit
+
+require_active_variants libmovit installdemo
+
+configure.cmd       /opt/local/libexec/qt5/bin/qmake
+configure.pre_args  {}
+
+destroot {
+    copy ${worksrcpath}/src/qml ${worksrcpath}/src/Shotcut.app/Contents/Resources/shotcut
+    ln -s ${prefix}/share/mlt ${worksrcpath}/src/Shotcut.app/Contents/Resources/mlt
+    ln -s ${prefix}/share/movit ${worksrcpath}/src/Shotcut.app/Contents/Resources/movit
+    ln -s ${prefix}/libexec/qt5/qml ${worksrcpath}/src/Shotcut.app/Contents/Resources/qml
+    copy ${worksrcpath}/src/Shotcut.app ${destroot}${applications_dir}
+}

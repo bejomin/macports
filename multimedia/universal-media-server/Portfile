@@ -1,0 +1,52 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        UniversalMediaServer UniversalMediaServer 9.4.2
+
+name                universal-media-server
+categories          multimedia
+platforms           darwin
+license             GPL-3+
+maintainers         nomaintainer
+description         UPnP Media Server
+long_description    Universal Media Server is a DLNA-compliant UPnP Media Server. It is capable of sharing video, \
+                    audio and images between most modern devices. It was originally based on PS3 Media Server by \
+                    shagrath, in order to ensure greater stability and file-compatibility.
+homepage            https://www.universalmediaserver.com/
+
+patchfiles          patch-fix-pom-no-git.diff
+
+checksums           UniversalMediaServer-${version}${extract.suffix} \
+                    rmd160 420ae65967051c36efded42bc205511fbe6f498f \
+                    sha256 14fd909e51080bc54f2413779daa87d25a4d53b3d0ede650cb0d90d66f5cff0a \
+                    size 48434905
+
+depends_lib         port:mediainfo \
+                    port:dcraw \
+                    port:vlc \
+                    port:mplayer \
+                    port:flac \
+                    port:tsmuxer \
+                    port:maven3 \
+                    port:openjdk8 
+
+#use_configure       no
+configure.cmd       mvn
+configure.pre_args  clean external:install -DskipTests -Pmacos -Dmaven.repo.local=${worksrcpath}/.m2/repository
+configure.env       JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk8/Contents/Home
+
+build.cmd           mvn 
+build.pre_args      clean external:install package -DskipTests -Pmacos -Dmaven.repo.local=${worksrcpath}/.m2/repository
+build.env           JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk8/Contents/Home
+
+destroot {
+    ln -s ${prefix}/bin/dcraw "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/dcraw"
+    ln -s ${prefix}/bin/ffmpeg "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/ffmpeg"
+    ln -s ${prefix}/bin/flac "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/flac"
+    ln -s ${prefix}/bin/mencoder "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/mencoder"
+    ln -s ${prefix}/bin/mplayer "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/mplayer"
+    ln -s ${prefix}/bin/tsMuxeR "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app/Contents/Resources/tsMuxeR"
+    copy "${worksrcpath}/target/ums-${version}-distribution/Universal Media Server.app" ${destroot}${applications_dir}
+}

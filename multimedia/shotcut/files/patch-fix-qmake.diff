@@ -1,0 +1,40 @@
+--- src/src.pro.bak	2020-05-06 19:15:54.000000000 +0100
++++ src/src.pro	2020-05-06 19:16:14.000000000 +0100
+@@ -337,7 +337,7 @@
+ DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
+ VERSION = $$SHOTCUT_VERSION
+ 
+-mac {
++#mac {
+     TARGET = Shotcut
+     ICON = ../packaging/macos/shotcut.icns
+     QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
+@@ -346,19 +346,19 @@
+ 
+     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
+     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
+-    isEmpty(MLT_PREFIX) {
++#    isEmpty(MLT_PREFIX) {
+         MLT_PREFIX = /opt/local
+-    }
+-    isEmpty(PREFIX) {
++#    }
++#    isEmpty(PREFIX) {
+         INCLUDEPATH += $$MLT_PREFIX/include/mlt++
+         INCLUDEPATH += $$MLT_PREFIX/include/mlt
+         LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+-    } else {
+-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
+-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
+-        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
+-    }
+-}
++#    } else {
++#        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
++#        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
++#        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
++#    }
++#}
+ win32 {
+     CONFIG += windows rtti
+     isEmpty(MLT_PATH) {
