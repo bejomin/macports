@@ -1,7 +1,7 @@
 # macports
 Local port repository.
 
-**TODO**  
+**TODO**
 * Fix builtin atom port
 * Write Musescore port
 * Write Retroarch port
