@@ -5,7 +5,7 @@ Local port repository.
 * multimedia/shotcut
   * multimedia/mlt  
   Requires an up-to-date version of mlt, bumped version from repo  
-  (??) Libmovit doesn't compile unless built with +installdemo
+  (??) Libmovit doesn't compile unless built with +installdemo (FIX detection of port variant)
 * universal-media-server
   * tsmuxer
 * sysutils/lsd
