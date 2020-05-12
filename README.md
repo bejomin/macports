@@ -2,13 +2,16 @@
 Local port repository.
 
 ## Working
+* universal-media-server
+  * tsmuxer
+* sysutils/lsd
+* devel/godot
+
+## Fix
 * multimedia/shotcut
   * multimedia/mlt  
   Requires an up-to-date version of mlt, bumped version from repo  
   (??) Libmovit doesn't compile unless built with +installdemo (FIX detection of port variant or upstream?)
-* universal-media-server
-  * tsmuxer
-* sysutils/lsd
 
 ## Todo
 * Fix repo atom port
@@ -20,3 +23,5 @@ Local port repository.
 * Write Disk Inventory X port
 * Fix repo Handbrake port
 * Write QLVideo port
+* Write Blender port
+* Write Krita port

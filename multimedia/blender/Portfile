@@ -1,0 +1,24 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+
+name                blender
+version             v2.82a
+categories          multimedia cad devel games
+platforms           darwin
+license             GPL-3
+maintainers         nomaintainer
+description         2D and 3D multimedia creation suite
+long_description    Open source 3D creation. Free to use for any purpose, forever.
+homepage            https://shadered.org/
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
+                    sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
+                    size 5649022 
+
+fetch {
+    system -W ${worksrcpath} "git clone -b ${version} https://github.com/blender/blender.git  && cd blender && make update"
+}
+
+depends_build       port:cmake

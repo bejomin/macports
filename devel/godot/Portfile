@@ -1,0 +1,43 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        godotengine godot 3.2.1-stable
+name                godot
+categories          devel games
+platforms           darwin
+license             MIT
+maintainers         nomaintainer
+description         2D and 3D cross-platform game engine
+long_description    Godot Engine is a feature-packed, cross-platform game \
+                    engine to create 2D and 3D games from a unified interface. \
+                    It provides a comprehensive set of common tools, so that \
+                    users can focus on making games without having to reinvent \
+                    the wheel. Games can be exported in one click to a number \
+                    of platforms, including the major desktop platforms (Linux, \
+                    Mac OSX, Windows) as well as mobile (Android, iOS) and \
+                    web-based (HTML5) platforms.
+homepage            https://godotengine.org
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160 42bed19653bb0964f4f1b8a66c760d0724faec16 \
+                    sha256 f794b1ecd443220e25cc969a0262d0f6e0d81fba1d85ed6dc6101473b60711d2 \
+                    size 22089237
+
+#Shotcut fails to compile if mlt<=6.16.0
+depends_lib         port:python38 \
+                    port:scons \
+                    port:yasm
+
+use_configure       no
+
+build.cmd           scons
+build.pre_args      platform=osx
+
+destroot {
+    copy ${worksrcpath}/misc/dist/osx_tools.app ${destroot}${applications_dir}/Godot.app
+    file mkdir ${destroot}${applications_dir}/Godot.app/Contents/MacOS
+    copy ${worksrcpath}/bin/godot.osx.tools.64 ${destroot}${applications_dir}/Godot.app/Contents/MacOS/Godot
+    file attributes ${destroot}${applications_dir}/Godot.app/Contents/MacOS/Godot -permissions +x
+}

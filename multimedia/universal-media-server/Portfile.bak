@@ -3,7 +3,7 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        UniversalMediaServer UniversalMediaServer 9.4.3
+github.setup        UniversalMediaServer UniversalMediaServer 9.4.2
 
 name                universal-media-server
 categories          multimedia
@@ -16,12 +16,12 @@ long_description    Universal Media Server is a DLNA-compliant UPnP Media Server
                     shagrath, in order to ensure greater stability and file-compatibility.
 homepage            https://www.universalmediaserver.com/
 
-patchfiles          patch-fix-pom-no-git-9.4.3.diff
+patchfiles          patch-fix-pom-no-git-9.4.2.diff
 
 checksums           UniversalMediaServer-${version}${extract.suffix} \
-                    rmd160 1ca8f7529c49ad42eb2924a6293b6a87809ffd55 \
-                    sha256 b125c8ea076f3342cfe93614389cbc6873ca187ad4715fc1fb3686f628d7e956 \
-                    size 49353358
+                    rmd160 420ae65967051c36efded42bc205511fbe6f498f \
+                    sha256 14fd909e51080bc54f2413779daa87d25a4d53b3d0ede650cb0d90d66f5cff0a \
+                    size 48434905
 
 depends_lib         port:mediainfo \
                     port:dcraw \

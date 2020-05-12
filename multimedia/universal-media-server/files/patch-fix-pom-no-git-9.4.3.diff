@@ -1,0 +1,53 @@
+*** pom.xml.orig	2020-05-09 09:42:01.000000000 +0100
+--- pom.xml	2020-05-10 20:10:37.000000000 +0100
+***************
+*** 87,93 ****
+  		<exec-maven-plugin-version>1.6.0</exec-maven-plugin-version>
+  		<maven-antrun-plugin-version>3.0.0</maven-antrun-plugin-version>
+  		<maven-javadoc-plugin-version>3.2.0</maven-javadoc-plugin-version>
+! 		<git-commit-id-plugin-version>4.0.0</git-commit-id-plugin-version>
+  		<maven-assembly-plugin-version>3.3.0</maven-assembly-plugin-version>
+  		<maven-enforcer-plugin-version>3.0.0-M3</maven-enforcer-plugin-version>
+  
+--- 87,93 ----
+  		<exec-maven-plugin-version>1.6.0</exec-maven-plugin-version>
+  		<maven-antrun-plugin-version>3.0.0</maven-antrun-plugin-version>
+  		<maven-javadoc-plugin-version>3.2.0</maven-javadoc-plugin-version>
+! 		<!-- <git-commit-id-plugin-version>4.0.0</git-commit-id-plugin-version> -->
+  		<maven-assembly-plugin-version>3.3.0</maven-assembly-plugin-version>
+  		<maven-enforcer-plugin-version>3.0.0-M3</maven-enforcer-plugin-version>
+  
+***************
+*** 758,764 ****
+  				These are used in the project.properties files.
+  				See: https://github.com/ktoso/maven-git-commit-id-plugin
+  			-->
+! 			<plugin>
+  				<groupId>pl.project13.maven</groupId>
+  				<artifactId>git-commit-id-plugin</artifactId>
+  				<version>${git-commit-id-plugin-version}</version>
+--- 758,764 ----
+  				These are used in the project.properties files.
+  				See: https://github.com/ktoso/maven-git-commit-id-plugin
+  			-->
+! 			<!-- <plugin>
+  				<groupId>pl.project13.maven</groupId>
+  				<artifactId>git-commit-id-plugin</artifactId>
+  				<version>${git-commit-id-plugin-version}</version>
+***************
+*** 775,781 ****
+  					<verbose>false</verbose>
+  					<generateGitPropertiesFile>false</generateGitPropertiesFile>
+  				</configuration>
+! 			</plugin>
+  
+  			<plugin>
+  				<artifactId>maven-compiler-plugin</artifactId>
+--- 775,781 ----
+  					<verbose>false</verbose>
+  					<generateGitPropertiesFile>false</generateGitPropertiesFile>
+  				</configuration>
+! 			</plugin> -->
+  
+  			<plugin>
+  				<artifactId>maven-compiler-plugin</artifactId>
