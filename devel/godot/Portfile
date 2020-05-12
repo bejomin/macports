@@ -8,7 +8,7 @@ name                godot
 categories          devel games
 platforms           darwin
 license             MIT
-maintainers         nomaintainer
+maintainers         {me.com:bejomin @bejomin} openmaintainer
 description         2D and 3D cross-platform game engine
 long_description    Godot Engine is a feature-packed, cross-platform game \
                     engine to create 2D and 3D games from a unified interface. \
@@ -25,10 +25,9 @@ checksums           ${name}-${version}${extract.suffix} \
                     sha256 f794b1ecd443220e25cc969a0262d0f6e0d81fba1d85ed6dc6101473b60711d2 \
                     size 22089237
 
-#Shotcut fails to compile if mlt<=6.16.0
-depends_lib         port:python38 \
-                    port:scons \
+depends_build       port:scons \
                     port:yasm
+depends_lib         port:python38
 
 use_configure       no
 

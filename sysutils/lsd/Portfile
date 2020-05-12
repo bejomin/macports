@@ -5,17 +5,18 @@ PortGroup           github 1.0
 PortGroup           cargo 1.0
 
 github.setup        Peltoche lsd 0.17.0
+name                lsd
 categories          sysutils
 platforms           darwin
 
 license             Apache-2
-maintainers         nomaintainer
+maintainers         {me.com:bejomin @bejomin} openmaintainer
 
 description         ls on acid
-long_description    Clone of ls with colorful output, file type icons, and more 
+long_description    Clone of ls with colorful output, file type icons, and more
 homepage            https://github.com/Peltoche/lsd
 
-checksums           lsd-${version}${extract.suffix} \
+checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1181b0292924e24425c5022e853864f47ad511a7 \
                     sha256 65b03ae322c4d3ed47f502866b4da2b2c7029b6cb5dc989e98664d564a57de1d \
                     size 51034

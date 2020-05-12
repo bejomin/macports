@@ -6,11 +6,10 @@ PortGroup           active_variants 1.1
 
 github.setup        mltframework shotcut 20.04.12 v
 name                shotcut
-version             20.04.12
 categories          multimedia
 platforms           darwin
 license             GPL-3
-maintainers         nomaintainer
+maintainers         {me.com:bejomin @bejomin}
 description         Video Editing Software
 long_description    Shotcut is a free, open source, cross-platform video editor.
 homepage            https://www.shotcut.org/
@@ -18,10 +17,10 @@ homepage            https://www.shotcut.org/
 #qmake doesn't seem to detect correct platform even though src.pro looks good
 patchfiles          patch-fix-qmake.diff
 
-checksums           shotcut-${version}${extract.suffix} \
+checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
-                    size 5649022 
+                    size 5649022
 
 #Shotcut fails to compile if mlt<=6.16.0
 depends_lib         port:qt5 \
@@ -44,7 +43,7 @@ depends_lib         port:qt5 \
 
 require_active_variants libmovit installdemo
 
-configure.cmd       /opt/local/libexec/qt5/bin/qmake
+configure.cmd       ${prefix}/libexec/qt5/bin/qmake
 configure.pre_args  {}
 
 destroot {

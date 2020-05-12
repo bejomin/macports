@@ -46,8 +46,8 @@ livecheck.regex     ${name}-(\\d+\\.\\d+(?:\\.\\d+)?)
 
 default_variants    +exuberantctags
 
-variant exuberantctags {
-    configure.args-append    --with-exuberant-ctags=/opt/local/bin/ctags
+variant exuberantctags description {support exuberant ctags} {
+    configure.args-append    --with-exuberant-ctags=${prefix}/bin/ctags
     depends_lib-append       port:py-ctags \
                              port:py-pygments
 }

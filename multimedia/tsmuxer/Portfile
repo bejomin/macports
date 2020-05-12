@@ -7,20 +7,21 @@ version             HEAD
 categories          multimedia
 platforms           darwin
 license             GPL-3+
-maintainers         nomaintainer
+maintainers         {me.com:bejomin @bejomin} openmaintainer
 description         A Transport Stream Muxer
 long_description    tsMuxer is a transport stream muxer for remuxing/muxing elementary streams, EVO/VOB/MPG, MKV/MKA, \
                     MP4/MOV, TS, M2TS to TS to M2TS. Supported video codecs H.264/AVC, H.265/HEVC, VC-1, MPEG2. Supported \
                     audio codecs AAC, AC3 / E-AC3(DD+), DTS/ DTS-HD.
+homepage            https://github.com/justdan96/tsMuxer
 
 fetch.type          git
 git.url             https://github.com/justdan96/tsMuxer.git
 
-depends_lib         port:pkgconfig \
-                    port:freetype \
+depends_build       port:pkgconfig
+depends_lib         port:freetype \
                     port:zlib
 
-configure.cmd       mkdir build && cd build && cmake 
+configure.cmd       mkdir build && cd build && cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release -DTSMUXER_GUI=FALSE ..
 
 build.cmd           cd build && make

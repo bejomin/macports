@@ -9,35 +9,34 @@ name                universal-media-server
 categories          multimedia
 platforms           darwin
 license             GPL-3+
-maintainers         nomaintainer
+maintainers         {me.com:bejomin @bejomin}
 description         UPnP Media Server
 long_description    Universal Media Server is a DLNA-compliant UPnP Media Server. It is capable of sharing video, \
                     audio and images between most modern devices. It was originally based on PS3 Media Server by \
                     shagrath, in order to ensure greater stability and file-compatibility.
 homepage            https://www.universalmediaserver.com/
 
-patchfiles          patch-fix-pom-no-git-9.4.3.diff
+patchfiles          patch-fix-pom-no-git-${version}.diff
 
 checksums           UniversalMediaServer-${version}${extract.suffix} \
                     rmd160 1ca8f7529c49ad42eb2924a6293b6a87809ffd55 \
                     sha256 b125c8ea076f3342cfe93614389cbc6873ca187ad4715fc1fb3686f628d7e956 \
                     size 49353358
 
+depends_build       port:maven3
 depends_lib         port:mediainfo \
                     port:dcraw \
                     port:vlc \
                     port:mplayer \
                     port:flac \
                     port:tsmuxer \
-                    port:maven3 \
-                    port:openjdk8 
+                    port:openjdk8
 
-#use_configure       no
 configure.cmd       mvn
 configure.pre_args  clean external:install -DskipTests -Pmacos -Dmaven.repo.local=${worksrcpath}/.m2/repository
 configure.env       JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk8/Contents/Home
 
-build.cmd           mvn 
+build.cmd           mvn
 build.pre_args      clean external:install package -DskipTests -Pmacos -Dmaven.repo.local=${worksrcpath}/.m2/repository
 build.env           JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk8/Contents/Home
 
