@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        PixarAnimationStudios OpenSubdiv 3_4_3 v
+name                opensubdiv
+categories          multimedia devel
+platforms           darwin
+license             Apache-2
+maintainers         {me.com:bejomin @bejomin} openmaintainer
+description         
+long_description    
+homepage            
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
+                    sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
+                    size 5649022
+
+compiler.openmp_version
+
+depends_build       port:cmake
+depends_lib         port:tbb \
+                    port:clew \
+                    port:zlib
+
+configure.cmd       mkdir build && cd build && cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DNO_EXAMPLES=1 \
+                    -DNO_TUTORIALS=1 \
+                    -DNO_REGRESSION=1 \
+                    -DNO_PTEX=1 \
+                    -DNO_DOC=1 \
+                    -DNO_CUDA=1 ..
+
+build.cmd           cd build && make

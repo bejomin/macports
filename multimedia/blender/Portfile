@@ -8,7 +8,7 @@ name                blender
 version             2.82a
 categories          multimedia cad devel games
 platforms           darwin
-license             GPL-3
+license             GPL-3+
 maintainers         {me.com:bejomin @bejomin}
 description         2D and 3D multimedia creation suite
 long_description    Open source 3D creation. Free to use for any purpose, forever.
@@ -17,34 +17,39 @@ homepage            https://shadered.org/
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
-                    size 5649022 
+                    size 5649022
 
 configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  ..
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
 
 depends_build       port:cmake \
                     port:ninja
 
 depends_lib         port:openal \
-    # alembic
-# usd
-# opensubdiv
-    port:jack \
-    port:libsndfile \
-    port:python38 \
-    port:fftw \
-    port:zlib \
-    port:libpng \
-    port:openjpeg \
-    port:freetype \
-    port:openexr \
-    port:ffmpeg \
-    # systemstubs
-# opencollada
-    port:libsdl2 \
+                    port:zlib \
     port:tiff \
-    port:boost \
+    port:python38 \
+    port:openvdb \
+    port:openjpeg \
     port:openimageio \
+    port:openexr \
     port:opencolorio \
+    port:libsndfile \
+    port:libsdl2 \
+    port:libpng \
+    port:libomp \
+    port:jack \
+    port:freetype \
+    port:fftw \
+    port:ffmpeg \
+    port:boost 
+    # usd https://github.com/PixarAnimationStudios/USD
+    # osl https://github.com/imageworks/OpenShadingLanguage/
+    # openxr https://github.com/KhronosGroup/OpenXR-SDK
+    # opensubdiv https://github.com/PixarAnimationStudios/OpenSubdiv
+    # openimagedenoise https://github.com/OpenImageDenoise
+    # opencollada https://github.com/KhronosGroup/OpenCOLLADA
+    # llvm
+    # alembic http://www.alembic.io/
 
-
+    # systemstubs https://github.com/apple-opensource/SystemStubs 
