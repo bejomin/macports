@@ -21,10 +21,16 @@ depends_build       port:pkgconfig
 depends_lib         port:freetype \
                     port:zlib
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release -DTSMUXER_GUI=FALSE ..
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DTSMUXER_GUI=FALSE
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}
 
 destroot {
     copy ${worksrcpath}/build/tsMuxer/tsmuxer \

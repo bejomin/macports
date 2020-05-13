@@ -3,12 +3,11 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        
-name                
-version             
-categories          multimedia devel
+github.setup        wdas partio 1.10.1 v
+name                partio
+categories          graphics multimedia devel
 platforms           darwin
-license             
+license             Permissive
 maintainers         {me.com:bejomin @bejomin} openmaintainer
 description         
 long_description    
@@ -19,8 +18,9 @@ checksums           ${name}-${version}${extract.suffix} \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
                     size 5649022
 
-depends_build       
-depends_lib         
+depends_build       port:cmake \
+                    port:swig
+depends_lib         port:zlib
 
 configure.cmd       mkdir build && cd build && cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..

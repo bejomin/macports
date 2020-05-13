@@ -1,0 +1,51 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        alembic alembic 1.7.12
+name                alembic
+categories          graphics multimedia devel
+platforms           darwin
+license             Permissive
+maintainers         {me.com:bejomin @bejomin}
+description         Open scene data framework
+long_description    Alembic is an open framework for storing and sharing scene \
+                    data that includes a C++ library, a file format, and client \
+                    plugins and applications.
+homepage            http://www.alembic.io/
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160  edce9346991722242ac0060fccefaa5c7e25d788 \
+                    sha256  558559d3f5bb44976f4fb69a75caf87b8fa7cc8271db1b82d0e391495fd83971 \
+                    size    828000
+
+depends_build       port:cmake
+depends_lib         port:openexr \
+                    port:hdf5 \
+                    port:boost
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DUSE_HDF5=ON \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}
+
+# https://trac.macports.org/ticket/54019
+post-destroot {
+    #system -W install_name_tool -id /opt/local/lib/libAlembic.1.7.dylib /opt/local/lib/libAlembic.1.7.dylib
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcconvert
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcdiff
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcecho
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcechobounds
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcls
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcstitcher
+    exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abctree
+}

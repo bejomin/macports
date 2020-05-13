@@ -5,7 +5,7 @@ PortGroup           github 1.0
 
 github.setup        KhronosGroup OpenCOLLADA 1.6.68 v
 name                opencollada
-categories          multimedia devel
+categories          graphics multimedia devel
 platforms           darwin
 license             Permissive
 maintainers         {me.com:bejomin @bejomin} openmaintainer

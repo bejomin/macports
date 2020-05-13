@@ -3,11 +3,11 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        imageworks OpenShadingLanguage 1.10.10 Release-
-name                openshadinglanguage
+github.setup        KhronosGroup OpenXR-SDK 1.0.8 release-
+name                graphics openxr-sdk
 categories          multimedia devel
 platforms           darwin
-license             BSD
+license             Apache-2
 maintainers         {me.com:bejomin @bejomin} openmaintainer
 description         
 long_description    
@@ -18,21 +18,14 @@ checksums           ${name}-${version}${extract.suffix} \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
                     size 5649022
 
-depends_build       port:cmake \
-                    port:llvm-10
-depends_lib         port:openimageio \
-                    port:boost \
-                    port:ilmbase \
-                    port:flex \
-                    port:bison \
-                    port:pugixml \
-                    port:partio
+depends_build       port:cmake
+depends_lib         port:python38 \
+                    port:vulkan-headers \
+                    port:moltenvk \
+                    port:jsoncpp \
+                    port:glslc
 
 configure.cmd       mkdir build && cd build && cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
 
 build.cmd           cd build && make
-
-destroot {
-	# Move files from "dist/ARCH/bin"
-} 

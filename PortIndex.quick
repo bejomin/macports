@@ -1,10 +1,19 @@
 global 0
 godot 744
 shadered 1531
-blender 2140
-mlt 2801
-mlt-qt5 4015
-shotcut 4867
-tsmuxer 5516
-universal-media-server 6174
-lsd 6898
+alembic 2140
+blender 2667
+materialx 3317
+oidn 4116
+opencollada 4458
+opensubdiv 4829
+graphics openxr-sdk 5639
+openshadinglanguage 6049
+partio 6484
+usd 6820
+mlt 7273
+mlt-qt5 8487
+shotcut 9339
+tsmuxer 9988
+universal-media-server 10646
+lsd 11370

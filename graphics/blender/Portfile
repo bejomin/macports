@@ -6,7 +6,7 @@ PortGroup           github 1.0
 github.setup        blender blender 2.82a v
 name                blender
 version             2.82a
-categories          multimedia cad devel games
+categories          graphics multimedia cad devel
 platforms           darwin
 license             GPL-3+
 maintainers         {me.com:bejomin @bejomin}
@@ -25,8 +25,7 @@ configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
 depends_build       port:cmake \
                     port:ninja
 
-depends_lib         port:openal \
-                    port:zlib \
+depends_lib         port:zlib \
     port:tiff \
     port:python38 \
     port:openvdb \

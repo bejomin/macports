@@ -3,9 +3,9 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        PixarAnimationStudios OpenSubdiv 3_4_3 v
-name                opensubdiv
-categories          multimedia devel
+github.setup        PixarAnimationStudios USD 20.05 v
+name                usd
+categories          graphics multimedia devel
 platforms           darwin
 license             Apache-2
 maintainers         {me.com:bejomin @bejomin} openmaintainer
@@ -18,20 +18,20 @@ checksums           ${name}-${version}${extract.suffix} \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
                     size 5649022
 
-compiler.openmp_version
-
 depends_build       port:cmake
-depends_lib         port:tbb \
-                    port:clew \
-                    port:zlib
+depends_lib         port:boost \
+                    port:python38 \
+                    port:tbb \
+                    port:glew \
+                    port:openexr \
+                    port:openimageio \
+                    port:opencolorio \
+                    port:openshadinglanguage \
+                    port:ptex \
+                    port:hdf5 \
+                    port:alembic
 
 configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
-                    -DNO_EXAMPLES=1 \
-                    -DNO_TUTORIALS=1 \
-                    -DNO_REGRESSION=1 \
-                    -DNO_PTEX=1 \
-                    -DNO_DOC=1 \
-                    -DNO_CUDA=1 ..
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
 
 build.cmd           cd build && make
