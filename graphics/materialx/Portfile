@@ -10,22 +10,32 @@ platforms           darwin
 license             Apache-2
 maintainers         {me.com:bejomin @bejomin} openmaintainer
 description         A rich material and look-development transfer standard
-long_description    MaterialX is an open standard for transfer of rich material and look-development \
-content between applications and renderers. Originated at Lucasfilm in 2012, MaterialX has been used by Industrial Light & Magic (ILM) in feature films such as Star Wars: The Force Awakens and real-time experiences such as Trials on Tatooine, and it remains the central material format for new ILM productions.
-homepage            
+long_description    MaterialX is an open standard for transfer of rich material \
+                    and look-development content between applications and renderers. \
+                    Originated at Lucasfilm in 2012, MaterialX has been used by \
+                    Industrial Light & Magic (ILM) in feature films such as Star \
+                    Wars: The Force Awakens and real-time experiences such as \
+                    Trials on Tatooine, and it remains the central material \
+                    format for new ILM productions.
+homepage            http://www.materialx.org/
 
 checksums           ${name}-${version}${extract.suffix} \
-                    rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
-                    sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
-                    size 5649022
+                    rmd160  4a6e5ccda6fd84d28ead93f415fb02f68e955b90 \
+                    sha256  f5b6fbb614920a33a0547bbfc6756b9f71c645325d4d1c8d12966a709962a22b \
+                    size    62594263
 
 depends_build       port:cmake
 depends_lib         port:python38 \
                     port:openimageio
 
-configure.cmd       mkdir build && cd build && cmake
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
-                    -DMATERIALX_BUILD_PYTHON=ON \
-                    -DMATERIALX_BUILD_OIIO=ON ..
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -DMATERIALX_BUILD_OIIO=ON
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}

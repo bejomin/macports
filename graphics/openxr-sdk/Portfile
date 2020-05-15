@@ -9,9 +9,12 @@ categories          multimedia devel
 platforms           darwin
 license             Apache-2
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description         Generated headers and sources for OpenXR loader
+long_description    OpenXR is a royalty-free, open standard that provides \
+                    high-performance access to Augmented Reality (AR) and \
+                    Virtual Reality (VR)—collectively known as XR—platforms \
+                    and devices.
+homepage            https://www.khronos.org/openxr/
 
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
@@ -25,7 +28,12 @@ depends_lib         port:python38 \
                     port:jsoncpp \
                     port:glslc
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}

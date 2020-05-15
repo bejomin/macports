@@ -9,9 +9,13 @@ categories          graphics multimedia devel
 platforms           darwin
 license             Permissive
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description         A secure data sharing program
+long_description    Partio is a small security focused data sharing program. \
+                    It will be able to handle chats and file transfers in the \
+                    beginning but anything will be possible be it voice chat or \
+                    streaming since the focus is secure information sharing \
+                    whatever type it is.
+homepage            http://www.partio.se
 
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
@@ -22,7 +26,12 @@ depends_build       port:cmake \
                     port:swig
 depends_lib         port:zlib
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}

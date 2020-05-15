@@ -9,9 +9,12 @@ categories          graphics multimedia devel
 platforms           darwin
 license             BSD
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description         Advanced shading language for production GI renderers
+long_description    Open Shading Language (OSL) is a small but rich language for \
+                    programmable shading in advanced renderers and other \
+                    applications, ideal for describing materials, lights, \
+                    displacement, and pattern generation.
+homepage            https://github.com/imageworks/OpenShadingLanguage/
 
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
@@ -27,12 +30,17 @@ depends_lib         port:openimageio \
                     port:bison \
                     port:pugixml \
                     port:partio
+                                        
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
-
-build.cmd           cd build && make
+build.dir           ${configure.dir}
 
 destroot {
 	# Move files from "dist/ARCH/bin"
-} 
+}

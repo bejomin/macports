@@ -9,9 +9,12 @@ categories          graphics multimedia devel
 platforms           darwin
 license             Apache-2
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description         Scene description interchange format
+long_description    Universal Scene Description (USD) is an efficient, scalable \
+                    system for authoring, reading, and streaming time-sampled \
+                    scene description for interchange between graphics \
+                    applications.
+homepage            http://www.openusd.org
 
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
@@ -31,7 +34,12 @@ depends_lib         port:boost \
                     port:hdf5 \
                     port:alembic
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}

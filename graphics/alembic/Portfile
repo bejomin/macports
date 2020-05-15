@@ -31,16 +31,14 @@ pre-configure	{
 configure.dir       ${worksrcpath}/build
 configure.cmd       cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
-                    -DUSE_HDF5=ON \
-                    -DCMAKE_INSTALL_PREFIX=${prefix}
-
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -DUSE_HDF5=ON
 configure.post_args ${worksrcpath}
 
 build.dir           ${configure.dir}
 
 # https://trac.macports.org/ticket/54019
 post-destroot {
-    #system -W install_name_tool -id /opt/local/lib/libAlembic.1.7.dylib /opt/local/lib/libAlembic.1.7.dylib
     exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcconvert
     exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcdiff
     exec install_name_tool -change libAlembic.1.7.dylib ${prefix}/lib/libAlembic.1.7.dylib ${destroot}${prefix}/bin/abcecho

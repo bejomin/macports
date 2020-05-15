@@ -3,25 +3,30 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        
-name                
+github.setup
+name
 categories          graphics multimedia devel
 platforms           darwin
-license             
+license
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description
+long_description
+homepage
 
 checksums           ${name}-${version}${extract.suffix} \
                     rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
                     sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
                     size 5649022
 
-depends_build       
-depends_lib         
+depends_build
+depends_lib
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
 
-build.cmd           cd build && make
+build.dir           ${configure.dir}

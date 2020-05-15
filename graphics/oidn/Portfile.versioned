@@ -1,9 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
 
 PortSystem          1.0
+PortGroup           github 1.0
 
+github.setup        OpenImageDenoise oidn 1.2.0
 name                oidn
-version             1.2.0
 categories          graphics multimedia devel
 platforms           darwin
 license             Apache-2
@@ -16,28 +17,28 @@ long_description    Intel Open Image Denoise is an open source library of \
                     the permissive Apache 2.0 license.
 homepage            https://openimagedenoise.github.io/
 
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160  8f9f8819c2afff8e68b48fd825caf745a16453bf \
+                    sha256  d476611d2d66c6921d1ed950a17024c92456d694a33312cd062cb853bfc076f5 \
+                    size    3408544
+
 depends_build       port:cmake \
                     port:ispc
 depends_lib         port:python38 \
                     port:tbb \
-                    port:tbb_debug
+                    port:tbb_debug \
+                    port:onednn
 
-fetch.type          git
-git.url             https://github.com/OpenImageDenoise/oidn.git
-git.branch          v1.2.0
-patch {
-    exec env GIT_DIR=${worksrcpath}/.git git submodule update --init --recursive
-    exec env GIT_DIR=${worksrcpath}/.git git submodule foreach git checkout master
-    exec env GIT_DIR=${worksrcpath}/.git git submodule foreach git pull --rebase origin master
-}
-
-pre-configure {
+pre-configure	{
     file mkdir "${worksrcpath}/build"
 }
 configure.dir       ${worksrcpath}/build
 configure.cmd       cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
-                    -DCMAKE_INSTALL_PREFIX=${prefix}
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -Wno-dev
+#                    -DTBB_DEBUG_LIBRARY_NAME=tbb_debug \
+#                    -DTBBMALLOC_DEBUG_LIBRARY_NAME=tbbmalloc_debug
 configure.post_args ${worksrcpath}
 
 build.dir           ${configure.dir}

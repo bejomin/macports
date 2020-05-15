@@ -1,0 +1,51 @@
+*** Makefile.orig	2020-05-15 00:56:40.000000000 +0100
+--- Makefile	2020-05-15 00:58:15.000000000 +0100
+*************** default: tbb tbbmalloc $(if $(use_proxy)
+*** 26,48 ****
+  all: tbb tbbmalloc tbbproxy test examples
+  
+  tbb: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbb cfg=release
+  
+  tbbmalloc: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=release malloc
+  
+  tbbproxy: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbproxy cfg=release tbbproxy
+  
+  tbbbind: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbbind cfg=release tbbbind
+  
+  test: tbb tbbmalloc $(if $(use_proxy),tbbproxy)
+! 	-$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=release malloc_test
+! 	-$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.test cfg=release
+  
+  rml: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.rml cfg=release
+  
+  examples: tbb tbbmalloc
+  	$(MAKE) -C examples -r -f Makefile tbb_root=.. release test
+--- 26,48 ----
+  all: tbb tbbmalloc tbbproxy test examples
+  
+  tbb: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbb cfg=debug
+  
+  tbbmalloc: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=debug malloc
+  
+  tbbproxy: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbproxy cfg=debug tbbproxy
+  
+  tbbbind: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbbind cfg=debug tbbbind
+  
+  test: tbb tbbmalloc $(if $(use_proxy),tbbproxy)
+! 	-$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=debug malloc_test
+! 	-$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.test cfg=debug
+  
+  rml: mkdir
+! 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.rml cfg=debug
+  
+  examples: tbb tbbmalloc
+  	$(MAKE) -C examples -r -f Makefile tbb_root=.. release test

@@ -9,21 +9,56 @@ categories          graphics multimedia devel
 platforms           darwin
 license             Permissive
 maintainers         {me.com:bejomin @bejomin} openmaintainer
-description         
-long_description    
-homepage            
+description         COLLADA file export plug-ins
+long_description    COLLADAMax and COLLADAMaya are new implementation of a 3ds \
+                    Max or Maya plug-ins to export scene or parts of it to a \
+                    COLLADA file, released under an MIT-license.
+homepage            https://github.com/KhronosGroup/OpenCOLLADA
 
-checksums           ${name}-${version}${extract.suffix} \
-                    rmd160 1bd67f2043499ab0ce71807a4212593cda957eb1 \
-                    sha256 c17bd080763124856c7c2063307014a87a808ee368f1c5a176630db6bf072adc \
-                    size 5649022
+checksums           OpenCOLLADA-${version}${extract.suffix} \
+                    rmd160  afc58cdd5ff73f8f11ae4f2da87d43817df9974d \
+                    sha256  70af2194a3a411ccc05102daa3faaa5f1ea1758120171f7f635a0e488985b2ad \
+                    size    12098976
 
 depends_build       port:cmake \
                     port:pkgconfig
 depends_lib         port:pcre \
                     port:libxml2
 
-configure.cmd       mkdir build && cd build && cmake
-configure.pre_args  -DCMAKE_BUILD_TYPE=Release ..
+patchfiles          patch-fix-pcre.diff
 
-build.cmd           cd build && make
+compiler.cxx_standard 2011
+configure.cxx_stdlib  macports-libstdc++
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -DCMAKE_MACOSX_RPATH=${prefix} \
+                    -DUSE_SHARED=ON
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}
+
+post-destroot {
+    exec install_name_tool -change libGeneratedSaxParser.dylib ${prefix}/lib/opencollada/libGeneratedSaxParser.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADASaxFrameworkLoader.dylib
+    exec install_name_tool -change libMathMLSolver.dylib ${prefix}/lib/opencollada/libMathMLSolver.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAFramework.dylib
+    exec install_name_tool -change libMathMLSolver.dylib ${prefix}/lib/opencollada/libMathMLSolver.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADASaxFrameworkLoader.dylib
+    exec install_name_tool -change libOpenCOLLADABaseUtils.dylib ${prefix}/lib/opencollada/libOpenCOLLADABaseUtils.dylib ${destroot}${prefix}/lib/opencollada/libGeneratedSaxParser.dylib
+    exec install_name_tool -change libOpenCOLLADABaseUtils.dylib ${prefix}/lib/opencollada/libOpenCOLLADABaseUtils.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAFramework.dylib
+    exec install_name_tool -change libOpenCOLLADABaseUtils.dylib ${prefix}/lib/opencollada/libOpenCOLLADABaseUtils.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADASaxFrameworkLoader.dylib
+    exec install_name_tool -change libOpenCOLLADABaseUtils.dylib ${prefix}/lib/opencollada/libOpenCOLLADABaseUtils.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAStreamWriter.dylib
+    exec install_name_tool -change libOpenCOLLADAFramework.dylib ${prefix}/lib/opencollada/libOpenCOLLADAFramework.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADASaxFrameworkLoader.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libGeneratedSaxParser.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADABaseUtils.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAFramework.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADASaxFrameworkLoader.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAStreamWriter.dylib
+    exec install_name_tool -change libUTF.dylib ${prefix}/lib/opencollada/libUTF.dylib ${destroot}${prefix}/lib/opencollada/libbuffer.dylib
+    exec install_name_tool -change libbuffer.dylib ${prefix}/lib/opencollada/libbuffer.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAStreamWriter.dylib
+    exec install_name_tool -change libftoa.dylib ${prefix}/lib/opencollada/libftoa.dylib ${destroot}${prefix}/lib/opencollada/libOpenCOLLADAStreamWriter.dylib
+    exec install_name_tool -change libftoa.dylib ${prefix}/lib/opencollada/libftoa.dylib ${destroot}${prefix}/lib/opencollada/libbuffer.dylib
+}

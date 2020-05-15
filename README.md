@@ -6,6 +6,7 @@ Local port repository.
   * tsmuxer
 * sysutils/lsd
 * devel/godot
+* graphics/alembic
 
 ## Fix
 * multimedia/shotcut
@@ -25,3 +26,4 @@ Local port repository.
 * Write QLVideo port
 * Write Blender port
 * Write Krita port
+* graphics/alembic: support for openmp

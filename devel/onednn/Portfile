@@ -1,0 +1,43 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        oneapi-src oneDNN 0.21.5 v
+name                onednn
+categories          graphics multimedia devel
+platforms           darwin
+license             Apache-2
+maintainers         {me.com:bejomin @bejomin} openmaintainer
+description         oneAPI Deep Neural Network Library
+long_description    oneAPI Deep Neural Network Library (oneDNN) is an open-source \
+                    cross-platform performance library of basic building blocks \
+                    for deep learning applications.
+homepage            https://01.org/dnnl
+
+checksums           oneDNN-${version}${extract.suffix} \
+                    rmd160  9f6375094c541c1dd12cc081bca3d88663eba5a3 \
+                    sha256  89bf0f22d3a854d42a66870ff471055ba4b1056405035cf309c411df6a7cf3ed \
+                    size    1689364
+
+depends_build       port:cmake \
+                    port:ispc
+depends_lib         port:tbb \
+                    port:tbb_debug
+
+compiler.openmp_version   3.0
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -DMKLDNN_THREADING=TBB \
+                    -DMKLROOT=/opt/intel/mkl \
+                    -DTBBROOT=/opt/local
+
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}
