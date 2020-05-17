@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        KDE kcompletion 5.70.0 v
+name                kf5completion
+categories          kde
+platforms           darwin
+license             GPL-2
+maintainers         {me.com:bejomin @bejomin}
+description
+long_description
+homepage            https://api.kde.org/frameworks/
+
+checksums           kcompletion-${version}${extract.suffix} \
+                    rmd160  2bbb89ba6ae7a404990ced2dd505890557f8fea6 \
+                    sha256  166a5724d5ce6fc78adaee20c1bc574be23a57ff43043b4b5d0cdeb32f77b215 \
+                    size    145979
+
+depends_build       port:cmake
+depends_lib         port:qt5 \
+                    port:kf5ecm
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}

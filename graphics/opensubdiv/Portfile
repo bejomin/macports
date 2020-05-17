@@ -23,13 +23,15 @@ checksums           ${name}-${version}${extract.suffix} \
                     sha256 6b09b774b15cb57ac9b1f3c8378a8dbd077eb0ee349d0e8d2cb12ffd52777084 \
                     size 39232618
 
-compiler.openmp_version 3.0
+# Building with openmp causes regression test to fail (unknown symbols)
+#compiler.openmp_version 3.0
 
 depends_build       port:cmake
 depends_lib         port:tbb \
                     port:clew \
                     port:zlib \
-                    port:ptex
+                    port:ptex \
+                    port:glfw
 
 pre-configure	{
     file mkdir "${workpath}/build"
@@ -37,7 +39,17 @@ pre-configure	{
 configure.dir       ${workpath}/build
 configure.cmd       cmake
 configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
-                    -DNO_DOCS=ON
+                    -DCMAKE_INSTALL_PREFIX=${prefix} \
+                    -DCMAKE_MACOSX_RPATH=${prefix} \
+                    -DNO_DOC=ON \
+                    -DNO_EXAMPLES=ON \
+                    -DNO_TUTORIALS=ON
 configure.post_args ${worksrcpath}
 
 build.dir           ${configure.dir}
+
+post-destroot {
+    exec install_name_tool -change libosdCPU.3.4.3.dylib ${prefix}/lib/libosdCPU.3.4.3.dylib ${destroot}${prefix}/lib/libosdGPU.3.4.3.dylib
+    exec install_name_tool -change libosdCPU.3.4.3.dylib ${prefix}/lib/libosdCPU.3.4.3.dylib ${destroot}${prefix}/bin/osd_regression
+    exec install_name_tool -change libosdGPU.3.4.3.dylib ${prefix}/lib/libosdGPU.3.4.3.dylib ${destroot}${prefix}/bin/osd_regression
+}

@@ -1,0 +1,62 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+name                blender
+version             2.82a
+categories          graphics multimedia cad devel
+platforms           darwin
+license             GPL-3+
+maintainers         {me.com:bejomin @bejomin}
+description         2D and 3D multimedia creation suite
+long_description    Open source 3D creation. Free to use for any purpose, forever.
+homepage            https://shadered.org/
+
+depends_build       port:cmake \
+                    port:ninja
+
+#depends_lib         port:zlib
+                    #port:tiff \
+                    #port:python38 \
+                    #port:openvdb \
+                    #port:openjpeg \
+                    #port:openimageio \
+                    #port:openexr \
+                    #port:opencolorio \
+                    #port:libsndfile \
+                    #port:libsdl2 \
+                    #port:libpng \
+                    #port:libomp \
+                    #port:jack \
+                    #port:freetype \
+                    #port:fftw \
+                    #port:ffmpeg \
+                    #port:boost
+                    # usd https://github.com/PixarAnimationStudios/USD
+                    # osl https://github.com/imageworks/OpenShadingLanguage/
+                    # openxr https://github.com/KhronosGroup/OpenXR-SDK
+                    # opensubdiv https://github.com/PixarAnimationStudios/OpenSubdiv
+                    # openimagedenoise https://github.com/OpenImageDenoise
+                    # opencollada https://github.com/KhronosGroup/OpenCOLLADA
+                    # llvm
+                    # alembic http://www.alembic.io/
+                    # systemstubs https://github.com/apple-opensource/SystemStubs
+
+master_sites        http://download.blender.org/source/
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160  9114e00448838d06af3dc1093adbe4da77e6594e \
+                    sha256  ce6b7ad9bb2ee52752bbbd6c37772be780a674a35236b3037b7f94d40e61cefe \
+                    size    41936139
+
+pre-configure	{
+    file mkdir "${workpath}/build_darwin"
+}
+configure.dir       ${worksrcpath}
+configure.cmd       make update
+configure.pre_args  {}
+configure.post_args {}
+
+build.dir           ${configure.dir}
+build.cmd           make ninja

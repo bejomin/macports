@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        KDE karchive 5.70.0 v
+name                kf5archive
+categories          kde
+platforms           darwin
+license             GPL-2
+maintainers         {me.com:bejomin @bejomin}
+description
+long_description
+homepage            https://api.kde.org/frameworks/
+
+checksums           karchive-${version}${extract.suffix} \
+                    rmd160  00ead9221f687893a5a17033816a76373bb5bdbb \
+                    sha256  aa4a5556b6e239c97304eab105dbb8364847144beb74e8402a78d5cd57825c51 \
+                    size    1018579
+
+depends_build       port:cmake
+depends_lib         port:qt5 \
+                    port:bzip2 \
+                    port:zlib \
+                    port:xz \
+                    port:kf5ecm
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}

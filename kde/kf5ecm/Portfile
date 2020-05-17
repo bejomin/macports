@@ -1,0 +1,39 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        KDE extra-cmake-modules 5.70.0 v
+name                kf5ecm
+categories          kde
+platforms           darwin
+license             Permissive
+maintainers         {me.com:bejomin @bejomin}
+description         Extra modules and scripts for CMake.
+long_description    The Extra CMake Modules package, or ECM, adds to the modules \
+                    provided by CMake, including ones used by find_package() to \
+                    find common software, ones that can be used directly in \
+                    CMakeLists.txt files to perform common tasks and toolchain \
+                    files that must be specified on the commandline by the user.
+homepage            https://api.kde.org/frameworks/
+
+checksums           extra-cmake-modules-${version}${extract.suffix} \
+                    rmd160  9adce99d85ec2e2e3ebccef1a3832930963fb275 \
+                    sha256  75dfd50376f776d8787b741f737866de7f6e6ffe843e7dd7f85a4f7da7dbbded \
+                    size    411735
+
+depends_build       port:cmake
+depends_lib         port:openexr \
+                    port:hdf5 \
+                    port:boost
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}

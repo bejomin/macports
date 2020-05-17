@@ -1,0 +1,41 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        google shaderc 2020.0 v
+categories          graphics multimedia devel
+platforms           darwin
+license             Apache-2
+maintainers         {me.com:bejomin @bejomin} openmaintainer
+description         A collection of tools, libraries and tests for shader compilation.
+long_description    ${description} \ At the moment it includes: glslc, a command \
+                    line compiler for GLSL/HLSL to SPIR-V\; and libshaderc, a \
+                    library API for accessing glslc functionality\; spvc, a \
+                    command line wrapper around the SPIR-V to GLSL/HLSL/MSL \
+                    compiler SPIRV-Cross\; and libshaderc_spvc, a library API for \
+                    accessing spvc functionality.
+homepage            https://github.com/google/shaderc
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160  100cc972adc5033e581e759d611e9c40a96da82f \
+                    sha256  068b4ea32b773372af49a5dc1342640e856482364c37646ca7185ecd41a747db \
+                    size    274382
+
+depends_build       port:cmake \
+                    port:python38 \
+                    port:gtest
+depends_lib         port:spirv-tools \
+                    port:glslang
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -GNinja \
+                    -DCMAKE_BUILD_TYPE=Release
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}
+build.cmd           ninja

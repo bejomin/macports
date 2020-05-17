@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        KDE ki18n 5.70.0 v
+name                kf5i18n
+categories          kde
+platforms           darwin
+license             GPL-2
+maintainers         {me.com:bejomin @bejomin}
+description
+long_description
+homepage            https://api.kde.org/frameworks/
+
+checksums           ki18n-${version}${extract.suffix} \
+                    rmd160  71f3ff2f70b214dc546f67162cab866c0c6813b4 \
+                    sha256  10bf496feb4cdda97e087562fed5f1a61b14aa656b1989c2a7abe641a3c1ec2e \
+                    size    1655925
+
+depends_build       port:cmake
+depends_lib         port:qt5 \
+                    port:kf5ecm
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}

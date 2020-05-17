@@ -1,0 +1,66 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        KDE krita 4.2.9 v
+name                krita
+categories          graphics kde
+platforms           darwin
+license             Permissive
+maintainers         {me.com:bejomin @bejomin}
+description         Krita is a free digital painting application.
+long_description    ${description} Digital Painting, Creative Freedom!
+homepage            https://krita.org/
+
+depends_build       port:cmake
+depends_lib         port:libpng \
+                    port:boost \
+                    port:gsl \
+                    port:zlib \
+                    port:openexr \
+                    port:tiff \
+                    port:openjpeg \
+                    port:giflib \
+                    port:libraw \
+                    port:fftw-3 \
+                    port:opencolorio \
+                    port:py-sip \
+                    port:py-pyqt5 \
+                    port:eigen3 \
+                    port:exiv2 \
+                    port:lcms \
+                    port:vc \
+                    port:poppler \
+                    port:poppler-qt5 \
+                    port:quazip \
+                    port:kf5ecm \
+                    port:kf5config \
+                    port:kf5widgetsaddons \
+                    port:kf5completion \
+                    port:kf5coreaddons \
+                    port:kf5guiaddons \
+                    port:kf5i18n \
+                    port:kf5itemmodels \
+                    port:kf5itemviews \
+                    port:kf5windowsystem \
+                    port:kf5archive
+
+post-extract {
+#    file delete -force "${worksrcpath}/3rdparty"
+#    file delete -force "${worksrcpath}/krita/integration/CMakeLists.txt"
+}
+
+#compiler.whitelist  macports-gcc
+#configure.ccache    no
+
+pre-configure	{
+    file mkdir "${worksrcpath}/build"
+}
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake
+configure.pre_args  -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=${prefix}
+configure.post_args ${worksrcpath}
+
+build.dir           ${configure.dir}

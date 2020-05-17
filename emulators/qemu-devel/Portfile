@@ -1,0 +1,54 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem              1.0
+
+name                    qemu-devel
+conflicts               qemu
+version                 HEAD
+categories              emulators
+platforms               darwin
+license                 GPL-2+
+maintainers             {me.com:bejomin @bejomin}
+description             Emulator for various architectures
+long_description        QEMU is a generic and open source machine emulator. \
+                        It can run OSes and programs made for one machine on a \
+                        different machine. By using dynamic translation, it \
+                        achieves very good performance.
+homepage                https://www.qemu.org
+
+fetch.type              git
+git.url                 https://github.com/patchew-project/qemu.git
+
+depends_build           port:texinfo \
+                        port:libtool \
+                        port:pkgconfig
+
+depends_lib             port:curl \
+                        port:zlib \
+                        port:bzip2 \
+                        port:ncurses \
+                        port:libusb \
+                        port:gnutls \
+                        port:cyrus-sasl2 \
+                        port:openjpeg \
+                        port:libpng \
+                        port:lzo \
+                        port:lzfse \
+                        port:snappy \
+                        port:zstd
+
+configure.args-append   --target-list=x86_64-softmmu,i386-softmmu,arm-softmmu,aarch64-softmmu,ppc-softmmu \
+                        --enable-curl \
+                        --enable-bzip2 \
+                        --enable-cocoa \
+                        --enable-curses \
+                        --enable-libusb \
+                        --enable-gnutls \
+                        --enable-vnc-sasl \
+                        --enable-vnc-jpeg \
+                        --enable-vnc-png \
+                        --enable-lzo \
+                        --enable-lzfse \
+                        --enable-snappy \
+                        --enable-zstd \
+                        --enable-tools
